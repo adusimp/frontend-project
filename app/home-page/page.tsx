@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import NoteModal from '../components/noteModal';
 import AddNoteModal from '../components/addNewNote';
-import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
+import { DragDropContext, Draggable, Droppable, DropResult } from '@hello-pangea/dnd';
 import { io } from 'socket.io-client';
 const socket = io(process.env.NEXT_PUBLIC_API_URL as string);
 
@@ -84,7 +84,7 @@ export default function HomePage() {
             socket.off('notesUpdated');
         };
     }, []);
-    const handleDragEnd = (result: any) => {
+    const handleDragEnd = (result: DropResult) => {
         if (!result.destination) return;
         const newNotes = Array.from(notes);
         const [moved] = newNotes.splice(result.source.index, 1);
